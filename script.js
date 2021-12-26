@@ -1,21 +1,32 @@
-const table = document.querySelector("table");
-let array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-let arrA = []
-let arrB = []
-let winConditions = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]]
+let table = document.querySelector("table");
+const startBtn = document.querySelector(".start");
+const infoPanel = document.querySelector(".info-panel");
+const resultInfo = document.querySelector(".result-info");
+const winsInfo = document.querySelector(".wins-info");
+const squares = document.querySelectorAll(".square");
+
+let wins = 0;
+let array = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+let arrA = [];
+let arrB = [];
+let winConditions = [
+	[0, 1, 2],
+	[3, 4, 5],
+	[6, 7, 8],
+	[0, 3, 6],
+	[1, 4, 7],
+	[2, 5, 8],
+	[0, 4, 8],
+	[2, 4, 6],
+];
 
 const circle = '<p><i class="far fa-circle"></i></p>';
 const cross = '<p><i class="fas fa-times"></i></p>';
 
-const choose = (e) => {
-	const a = e.target.closest(".square");
-	a.innerHTML = cross;
-	array.splice(array.indexOf(parseInt(a.id)), 1);
-    arrA.push(parseInt(a.id))
-    if(array.length>0){
-        itMove()
-        console.log(arrA);
-    }
+const choose = (object) => {
+	object.innerHTML = cross;
+	array.splice(array.indexOf(parseInt(object.id)), 1);
+	arrA.push(parseInt(object.id));
 };
 
 const itMove = () => {
@@ -23,31 +34,75 @@ const itMove = () => {
 	let itSquare = document.getElementById(array[itIndex]);
 	array.splice(itIndex, 1);
 	itSquare.innerHTML = circle;
-    arrB.push(itIndex)
-    console.log(arrB);
+	arrB.push(parseInt(itSquare.id));
+	console.log(arrB);
 };
 
-const checkResult = () => {
-    console.log('ok');
-    winConditions.forEach(condition => {
-        if(condition == arrA.sort()){
-            console.log('win');
-        }
-    })
+function checkResult(array) {
+	for (let i = 0; i < winConditions.length; i++) {
+		let condition = winConditions[i];
+		if (
+			array.includes(condition[0]) &&
+			array.includes(condition[1]) &&
+			array.includes(condition[2])
+		) {
+			return true;
+		}
+	}
+	return false;
 }
+
+const moves = (a) => {
+	choose(a);
+	if (array.length < 9) {
+		if (checkResult(arrA) == true) {
+			wins++;
+			endGame("wygrana");
+		} else {
+			itMove();
+			if (checkResult(arrB) == true) {
+				endGame("przegrana");
+			}
+		}
+	} else if (array.length == 0) {
+		if (checkResult(arrA) == true) {
+			endGame("wygrana");
+		} else {
+			endGame("remis");
+		}
+	} else {
+		itMove();
+	}
+};
+
+const reset = () => {
+	squares.forEach((square) => {
+		square.innerHTML = "";
+	});
+	array = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+	arrA = [];
+	arrB = [];
+};
 
 const game = (e) => {
-    console.log(array);
-    if(array.length>0) {
-        choose(e)
-    } else {
-        winConditions.forEach(condition => {
-            console.log(condition);
-            if(arrA.includes(condition)) {
-                console.log('win');
-            }
-        });
-    }
-}
+	if(infoPanel.style.display == "none"){
+		const a = e.target.closest(".square");
+		if (array.includes(parseInt(a.id))) {
+			moves(a);
+		}
+	}
+};
 
+const endGame = (msg) => {
+	resultInfo.textContent = msg;
+	winsInfo.textContent = wins;
+	infoPanel.style.display = "flex";
+	reset();
+};
+
+const startGame = () => {
+	infoPanel.style.display = "none";
+};
+
+startBtn.addEventListener("click", startGame);
 table.addEventListener("click", game);

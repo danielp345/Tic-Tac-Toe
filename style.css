@@ -23,6 +23,39 @@ body {
 }
 
 i {
-    color: #fff;
-    font-size: 60px;
+	color: #fff;
+	font-size: 60px;
+}
+
+.info-panel {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	height: 130px;
+	width: 450px;
+	padding: 0 40px;
+	box-shadow: 5px 5px 5px 10px #333;
+	text-align: center;
+	background-color: #333;
+	color: #fff;
+}
+
+.info-panel p {
+	margin: 10px;
+}
+
+.result-info, .wins-info {
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.start {
+	width: 150px;
+	height: 45px;
+	font-weight: bold;
+	border: none;
+	border-radius: 5px;
+	padding: 10px;
 }
