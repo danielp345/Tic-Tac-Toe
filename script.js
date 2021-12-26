@@ -54,21 +54,22 @@ function checkResult(array) {
 
 const moves = (a) => {
 	choose(a);
-	if (array.length < 9) {
+	if (array.length < 9 && array.length != 0) {
 		if (checkResult(arrA) == true) {
 			wins++;
-			endGame("wygrana");
+			setTimeout(endGame, 200, 'wygrana')
 		} else {
 			itMove();
 			if (checkResult(arrB) == true) {
-				endGame("przegrana");
+				setTimeout(endGame, 200, 'przegrana')
 			}
 		}
 	} else if (array.length == 0) {
 		if (checkResult(arrA) == true) {
-			endGame("wygrana");
+			wins++
+			setTimeout(endGame, 200, 'wygrana')
 		} else {
-			endGame("remis");
+			setTimeout(endGame, 200, 'remis')
 		}
 	} else {
 		itMove();
@@ -97,11 +98,11 @@ const endGame = (msg) => {
 	resultInfo.textContent = msg;
 	winsInfo.textContent = wins;
 	infoPanel.style.display = "flex";
-	reset();
 };
 
 const startGame = () => {
 	infoPanel.style.display = "none";
+	reset()
 };
 
 startBtn.addEventListener("click", startGame);

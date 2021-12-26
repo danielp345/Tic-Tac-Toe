@@ -9,7 +9,20 @@ body {
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
+	background-color: #000;
 	font-family: "Montserrat", sans-serif;
+}
+
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+table {
+	margin-top: 20px;
+
 }
 
 .square {
@@ -18,7 +31,8 @@ body {
 	align-items: center;
 	height: 100px;
 	width: 100px;
-	background-color: #000;
+	border-radius: 5px;
+	background-color: #222;
 	color: #fff;
 }
 
@@ -29,6 +43,7 @@ i {
 
 .info-panel {
 	position: absolute;
+	top: 50px;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -36,7 +51,8 @@ i {
 	height: 130px;
 	width: 450px;
 	padding: 0 40px;
-	box-shadow: 5px 5px 5px 10px #333;
+	border-radius: 5px;
+	box-shadow: 0 0 5px 10px #333;
 	text-align: center;
 	background-color: #333;
 	color: #fff;
@@ -46,7 +62,8 @@ i {
 	margin: 10px;
 }
 
-.result-info, .wins-info {
+.result-info,
+.wins-info {
 	font-weight: bold;
 	text-transform: uppercase;
 }
@@ -58,4 +75,12 @@ i {
 	border: none;
 	border-radius: 5px;
 	padding: 10px;
+}
+
+@media (max-width: 600px) {
+	.info-panel {
+		top: 40px;
+		width: 370px;
+		padding-bottom: 10px;
+	}
 }
